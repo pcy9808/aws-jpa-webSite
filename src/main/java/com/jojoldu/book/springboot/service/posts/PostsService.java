@@ -18,6 +18,9 @@ import java.util.stream.Collectors;
 public class PostsService {
     private final PostsRepository postsRepository;
 
+//    .map(PostsListResponseDto::new)
+//    위 코드는 .Map(posts -> new PostsListResponseDto(posts))
+//      stram을 map 을 통해 PostsListResponseDto 변환 -> list로 반
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc() {
         return postsRepository.findAllDesc().stream()
@@ -41,6 +44,7 @@ public class PostsService {
     public PostsResponseDto findById (Long id) {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id= " + id));
+        // .orElseThrow(() / optional 객체 다. 널 처리 시 예외를 던진다.
 
         return new PostsResponseDto(entity);
     }
